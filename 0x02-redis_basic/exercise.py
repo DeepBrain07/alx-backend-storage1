@@ -84,4 +84,5 @@ def replay(arg) -> None:
     print(f"{func_name} was called {len(o_lst)} times:")
     for name, key in z_lst:
         name = name.decode('utf-8')
+        key = key.decode('utf-8')
         print(f"{func_name}(*({name})) -> {key}")
