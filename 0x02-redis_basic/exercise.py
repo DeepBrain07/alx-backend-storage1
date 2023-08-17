@@ -70,3 +70,18 @@ class Cache:
         if fn:
             return fn(value)
         return value
+
+
+def replay(arg) -> None:
+    """ This function displays the history
+    of calls of a particular function """
+    func_name = arg.__qualname__
+    i_lst = redis.Redis().lrange("{}:inputs".format(func_name), 0, -1)
+    o_lst = redis.Redis().lrange("{}:outputs".format(func_name), 0, -1)
+    new = arg(1)
+
+    z_lst = zip(i_lst, o_lst)
+    print(f"{func_name} was called {len(o_lst)} times:")
+    for name, key in z_lst:
+        name = name.decode('utf-8')
+        print(f"{func_name}(*({name})) -> {key}")
