@@ -85,4 +85,4 @@ def replay(arg) -> None:
     for name, key in z_lst:
         name = name.decode('utf-8')
         key = key.decode('utf-8')
-        print(f"{func_name}(*({name})) -> {key}")
+        print(f"{func_name}(*{name}) -> {key}")
