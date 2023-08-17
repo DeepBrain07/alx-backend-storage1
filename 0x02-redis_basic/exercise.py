@@ -25,14 +25,14 @@ def call_history(method: Callable) -> Callable:
     func_name = method.__qualname__
 
     @wraps(method)
-    def wrapper(self, arg):
+    def wrapper(self, *args, **kwargs):
         """ class wrapper """
-        self._redis.rpush(f'{func_name}:inputs', str(arg))
+        self._redis.rpush(f'{func_name}:inputs', str(args))
         key = str(uuid.uuid4())
         self._redis.rpush(f'{func_name}:outputs', key)
         if isinstance(key, bytes):
-            arg = arg.decode('utf-8')
-        self._redis.set(key, arg)
+            args = args.decode('utf-8')
+        self._redis.set(key, str(args))
         return key
     return wrapper
 
